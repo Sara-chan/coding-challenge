@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<sec:http auto-config="true" 
+		use-expressions="true">
+		<sec:csrf disabled="true"/>
+
+		<sec:intercept-url pattern="/ressources/assets/**"
+			access="permitAll" />
+	
+		<sec:intercept-url pattern="/ressources/partials/**"
+			access="permitAll" />
+			
+		<sec:intercept-url pattern="/login.xhtml"
+			access="permitAll" />	
+			
+		<sec:intercept-url pattern="/pages/**" 
+		access="isAuthenticated()" />	
+
+			
+		
+			
+			
+
+<!-- 		<sec:intercept-url pattern="/ParcPages/ClientView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_CLIENT')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/ChantierView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_CHANTIER')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/VehiculeView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_VEHICULE')" /> -->
+			
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/ConducteurView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_CONDUCTEUR')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/AffectationConducteurView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_CONDUCTEUR')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/PanneView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_PANNE')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/AlerteView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_ALERTE')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/AssuranceView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_OPERATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/VidangeView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_OPERATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/VignetteView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_OPERATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/VisitetechniqueView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_OPERATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/OperationsPages/CartegriseView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_OPERATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/DemandeReservationView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_PLANIFICATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/AffectationView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_PLANIFICATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/PlanningView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_PLANIFICATION')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/ParcPages/RemplissageView.xhtml" -->
+<!-- 			access="hasRole('ROLE_VISUALISER_CARBURANT')" /> -->
+			
+<!-- 			<sec:intercept-url pattern="/SettingsPages/PrixGasoilView.xhtml"  -->
+<!-- 			access="hasRole('ROLE_VISUALISER_SETTINGS')" /> -->
+			
+
+			
+		
+
+		<sec:form-login login-page="/login.xhtml"
+			login-processing-url="/j_spring_security_check"
+			authentication-failure-url="/login.xhtml?error=true"
+			username-parameter="username" password-parameter="password"
+			default-target-url="/pages/AccueilView.xhtml" 
+			always-use-default-target="true"  />
+		<sec:logout logout-url="/logout.xhtml" logout-success-url="/login.xhtml"/>
+		<sec:remember-me  
+		  remember-me-parameter="remember-me"
+		  key="remember-me-key"
+		  token-validity-seconds="8600"/> 
+
+	</sec:http>
+
+	<sec:authentication-manager alias="authenticationManager">
+		
+		<sec:authentication-provider>
+		
+			<sec:jdbc-user-service data-source-ref="ds"
+
+				users-by-username-query="
+         SELECT login as username, password, active as enabled
+         FROM user
+         WHERE lower(login)=lower(?);"
+
+				authorities-by-username-query="
+        SELECT login as username, role as authority FROM user WHERE lower(login)=lower(?);"
+        
+        	
+         />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+
+
+	<beans:bean id="authenticationFailureHandler"
+		class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop
+					key="org.springframework.security.core.userdetails.UsernameNotFoundException">/login.action?error=1</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+
+
+
+
+</beans:beans>

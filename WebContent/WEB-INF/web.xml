@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+                        version="3.0">
+
+  <display-name></display-name>
+  
+   <welcome-file-list>
+  <welcome-file>login.xhtml</welcome-file>
+  </welcome-file-list>
+<context-param>
+    <param-name>facelets.SKIP_COMMENTS</param-name>
+    <param-value>true</param-value>
+</context-param>
+  <context-param>
+    <param-name>primefaces.FONT_AWESOME</param-name>
+    <param-value>true</param-value>
+</context-param>
+	<context-param>
+    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+    <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
+	</context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+    /WEB-INF/applicationContext.xml
+    /WEB-INF/spring-sec-security-config.xml	   
+    </param-value>
+  </context-param>
+
+<listener>
+    <listener-class>
+			org.springframework.web.context.ContextLoaderListener
+	</listener-class>
+</listener>
+
+<listener>
+    <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+    </listener-class>
+</listener>
+<listener>
+    <listener-class>org.apache.commons.fileupload.servlet.FileCleanerCleanup</listener-class>
+</listener>
+  <listener>
+    <listener-class>
+      org.springframework.security.web.session.HttpSessionEventPublisher
+    </listener-class>
+  </listener>
+ <context-param>
+    <param-name>primefaces.UPLOADER</param-name>
+    <param-value>commons</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>FacesServlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <filter>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+  <init-param>
+    <param-name>thresholdSize</param-name>
+    <param-value>51200</param-value>
+  </init-param>
+  <init-param>
+    <param-name>uploadDirectory</param-name>
+    <param-value>C:\etc</param-value>
+  </init-param>
+</filter>
+
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/j_spring_security_logout</url-pattern>
+</filter-mapping>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  
+<servlet-mapping>
+<servlet-name>FacesServlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern> <!-- or one of your own --> 
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>FacesServlet</servlet-name>
+    <url-pattern>*.jsp</url-pattern> <!-- or one of your own --> 
+</servlet-mapping>
+
+</web-app>

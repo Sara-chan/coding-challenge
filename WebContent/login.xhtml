@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:sec="http://www.springframework.org/security/tags"> 
+  <h:head>
+        <meta charset="utf-8"/>
+        <title>Code Challenge</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta content="" name="description" />
+        <meta content="themes-lab" name="author" />
+        <link rel="shortcut icon" href="#{request.contextPath}/ressources/assets/img/favicon.png"/>
+        <link href="${request.contextPath}/ressources/assets/css/style.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/ressources/assets/css/ui.css" rel="stylesheet"/>
+        <link href="src/main/webapp/ressources/assets/plugins/bootstrap-loading/lada.min.css" rel="stylesheet"/>
+  </h:head>
+  
+    <h:body class="form-group" data-page="login">
+        <!-- BEGIN LOGIN BOX -->
+        <div class="container" id="login-block">
+        <img alt="Code Challenge" src="#{request.contextPath}/ressources/assets/images/codeChallenge.png" style="margin: auto;  display: block; width: 50%;" />
+        	<div class="row">
+        	                        
+        	
+        	</div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-md-offset-4">
+                 
+                    <div class="account-wall">
+                                     
+                        <form class="form-signin"  action="#{request.contextPath}/j_spring_security_check" method="POST">
+                        <br/>  <br/>  <br/> <br/> <br/> <br/>
+                            <div class="append-icon">
+                                <input type="text" name="email" value="#{userManagedBean.user.email" id="login" class="form-control form-white username" placeholder="Email" required="required"/>
+                                <i class="icon-user"></i>
+                            </div>
+                            <div class="append-icon m-b-20">
+                                <input type="password" name="password" value="#{userManagedBean.user.password}" class="form-control form-white password" placeholder="Password" required="required"/>
+                                <i class="icon-lock"></i>
+                            </div>
+                             <div class="append-icon m-b-20">
+                            
+                             
+                           		 <label class="checkbox-inline" style="color: black;"> <input type="checkbox" name="remember-me"/>Remember me </label>
+                           		 
+                              </div>
+                            <div class="append-icon m-b-20">
+                            <button type="submit"  class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Sign in</button>
+                          
+                         </div>
+                        </form>
+                 
+                    </div>
+                </div>
+            </div>
+            <p class="account-copyright" style="font-size: 9px">
+                <span> <h:outputText value="© Copyright 2017"></h:outputText>   </span><span>S.B</span>. <span>All rights reserved.</span>
+            </p>
+     
+        </div>
+         <script src="#{request.contextPath}/ressources/assets/plugins/jquery/jquery-1.11.1.min.js"></script> 
+        <script src="#src/main/ressources/assets/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+        <script src="#{request.contextPath}/ressources/assets/plugins/gsap/main-gsap.min.js"></script>
+        <script src="src/main/ressources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="#{request.contextPath}/ressources/assets/plugins/backstretch/backstretch.min.js"></script>
+        <script src="#{request.contextPath}/ressources/assets/plugins/bootstrap-loading/lada.min.js"></script>
+ <script src="#{request.contextPath}/ressources/assets/login-v1.js"></script>     
+        <script>
+        $.backstretch(["#{request.contextPath}/ressources/assets/images/back.jpg"]);
+        </script>
+    </h:body>
+</html>
